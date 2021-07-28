@@ -1,12 +1,13 @@
-#upd 28.07.2021 исправлен баг, когда при повторном бронировании уже имеющих мест можно было забронировать больше, чем всего свободно
+#upd 28.07.2021 18:35 исправлен баг, когда при повторном бронировании уже имеющих мест можно было забронировать больше, чем всего свободно
 import telebot
 import qrcode
 
 from peremen import token, privetstvie, planeta, bigviz, UPS, mxP, mxU, mxV, chisla
 
 bD, bV, bU=0,0,0
+
 mP=4
-mV=33
+mV=33     
 mU=21
 
 mesP = int(mxP) - (int(bD) + int(mP))
