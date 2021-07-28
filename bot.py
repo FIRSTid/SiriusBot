@@ -2,19 +2,18 @@ import telebot
 import qrcode
 
 from peremen import token, privetstvie, planeta, bigviz, UPS, mxP, mxU, mxV, chisla
-
-bD, bV, bU=0,0,0
-
+bD=0
+bV=0
+bU=0
 mP=4
 mV=33
 mU=21
-
 mesP = int(mxP) - (int(bD) + int(mP))
 mesV = int(mxV) - (int(bV) + int(mV))
 mesU = int(mxU) - (int(bU) + int(mU))
-
-p,v,u=0,0,0
-
+p=0
+v=0
+u=0
 bot = telebot.TeleBot(token)
 qrBS, qrBV, qrUPS="","",""
 user_id=''
@@ -110,32 +109,34 @@ def send_text(message):
 def get_biletP(message):
     bronP = message.text
     if bronP in chisla:
-        global bD
-        bD = bD + int(bronP)
         if user_id=='':
             keyboard = telebot.types.ReplyKeyboardMarkup(True)
             keyboard.row('/start')
             bot.send_message(message.chat.id, 'ОШИБКА! Начните пожалуйста сначала', reply_markup=keyboard)
-        elif int(bronP) <= int(mesP):
-            img = qrcode.make('Мероприятие: Белка и Стрелка. Правда.\n'
-                              'Количество мест: ' + str(bD) + '\n'
-                              'Дата: 03.09.2021\n'
-                               'Время: 16:00')
-            img.save('qr'+str(user_id)+'BS.png')
-            global qrBS
-            qrBS = open('qr'+str(user_id)+'BS.png', 'rb')
-            bot.send_photo(message.chat.id, qrBS)
-            bot.send_message(message.chat.id, 'Мероприятие: Белка и Стрелка. Правда.\n'
-                                              'Количество мест: ' + str(bD) + '\n'
-                                              'Дата: 03.09.2021\n'
-                                              'Время: 16:00')
-            bot.send_message(message.chat.id, 'Вы забронировали ' + str(bronP) + ' мест. Предъявите этот QR код на входе.')
-            global p
-            p = 1
         else:
-            keyboard = telebot.types.ReplyKeyboardMarkup(True)
-            keyboard.row('/start')
-            bot.send_message(message.chat.id, 'ОШИБКА! Вы хотели забронировать слишком большое количество мест ', reply_markup=keyboard)
+
+            if int(bronP) <= int(mesP):
+                global bD
+                bD = bD + int(bronP)
+                img = qrcode.make('Мероприятие: Белка и Стрелка. Правда.\n'
+                                  'Количество мест: ' + str(bD) + '\n'
+                                  'Дата: 03.09.2021\n'
+                                   'Время: 16:00')
+                img.save('qr'+str(user_id)+'BS.png')
+                global qrBS
+                qrBS = open('qr'+str(user_id)+'BS.png', 'rb')
+                bot.send_photo(message.chat.id, qrBS)
+                bot.send_message(message.chat.id, 'Мероприятие: Белка и Стрелка. Правда.\n'
+                                                  'Количество мест: ' + str(bD) + '\n'
+                                                  'Дата: 03.09.2021\n'
+                                                  'Время: 16:00')
+                bot.send_message(message.chat.id, 'Вы забронировали ' + str(bronP) + ' мест. Предъявите этот QR код на входе.')
+                global p
+                p = 1
+            else:
+                keyboard = telebot.types.ReplyKeyboardMarkup(True)
+                keyboard.row('/start')
+                bot.send_message(message.chat.id, 'ОШИБКА! Вы хотели забронировать слишком большое количество мест ', reply_markup=keyboard)
     else:
         keyboard = telebot.types.ReplyKeyboardMarkup(True)
         keyboard.row('/start')
@@ -144,13 +145,13 @@ def get_biletP(message):
 def get_biletV(message):
     bronV = message.text
     if bronV in chisla:
-        global bV
-        bV = bV + int(bronV)
         if user_id=='':
             keyboard = telebot.types.ReplyKeyboardMarkup(True)
             keyboard.row('/start')
             bot.send_message(message.chat.id, 'ОШИБКА! Начните пожалуйста сначала', reply_markup=keyboard)
         elif int(bronV) <= int(mesV):
+            global bV
+            bV = bV + int(bronV)
             img = qrcode.make('Мероприятие: Большие вызовы, защита проектов.\n'
                               'Количество мест: ' + str(bV) +'\n'
                               'Дата: 27.07.2021\n'
@@ -178,13 +179,13 @@ def get_biletV(message):
 def get_biletU(message):
     bronU = message.text
     if bronU in chisla:
-        global bU
-        bU = bU + int(bronU)
         if user_id == '':
             keyboard = telebot.types.ReplyKeyboardMarkup(True)
             keyboard.row('/start')
             bot.send_message(message.chat.id, 'ОШИБКА! Начните пожалуйста сначала', reply_markup=keyboard)
         if int(bronU) <= int(mesU):
+            global bU
+            bU = bU + int(bronU)
             img = qrcode.make('Мероприятие: Уральская Проектная Смена, защита проектов.\n'
                               'Количество мест: ' + str(bU) + '\n'
                               'Дата: 24.01.2022\n'
