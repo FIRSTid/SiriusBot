@@ -2,18 +2,19 @@ import telebot
 import qrcode
 
 from peremen import token, privetstvie, planeta, bigviz, UPS, mxP, mxU, mxV, chisla
-bD=0
-bV=0
-bU=0
+
+bD, bV, bU=0,0,0
+
 mP=4
 mV=33
 mU=21
+
 mesP = int(mxP) - (int(bD) + int(mP))
 mesV = int(mxV) - (int(bV) + int(mV))
 mesU = int(mxU) - (int(bU) + int(mU))
-p=0
-v=0
-u=0
+
+p,v,u=0,0,0
+
 bot = telebot.TeleBot(token)
 qrBS, qrBV, qrUPS="","",""
 user_id=''
