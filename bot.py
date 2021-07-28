@@ -1,4 +1,5 @@
-#upd 28.07.2021 18:35 исправлен баг, когда при повторном бронировании уже имеющих мест можно было забронировать больше, чем всего свободно
+#upd 28.07.2021 16:35 исправлен баг, когда при повторном бронировании уже имеющих мест можно было забронировать больше, чем всего свободно
+#ypd 28.07.2021 18:03 удалил "забронированные места" которые нужны были для проверки работоспособности бота
 import telebot
 import qrcode
 
@@ -263,7 +264,7 @@ def query_handler(call):
             answer = 'Все места забронированы'
             bot.send_message(call.message.chat.id, answer)
         elif mP<mxP:
-            bot.send_message(call.message.chat.id, 'Свободно мест: '+str(int(mxP)-(bD+int(mP))))
+            bot.send_message(call.message.chat.id, 'Свободно мест: '+str(int(mxP)-int(bD)))
             sent =bot.send_message(call.message.chat.id, 'Сколько мест вы хотите забронировать? Введите количество.')
             bot.register_next_step_handler(sent, get_biletP)
 
@@ -272,7 +273,7 @@ def query_handler(call):
             answer = 'Все места забронированы'
             bot.send_message(call.message.chat.id, answer)
         elif mV < mxV:
-            bot.send_message(call.message.chat.id, 'Свободно мест: '+str(int(mxV)-(bV+int(mV))))
+            bot.send_message(call.message.chat.id, 'Свободно мест: '+str(int(mxV)-int(bV)))
             sent = bot.send_message(call.message.chat.id, 'Сколько мест вы хотите забронировать? Введите количество.')
             bot.register_next_step_handler(sent, get_biletV)
 
@@ -281,7 +282,7 @@ def query_handler(call):
             answer = 'Все места забронированы'
             bot.send_message(call.message.chat.id, answer)
         elif mU < mxU:
-            bot.send_message(call.message.chat.id, 'Свободно мест: ' +str(int(mxU)-(bU+int(mU))))
+            bot.send_message(call.message.chat.id, 'Свободно мест: ' +str(int(mxU)-bU))
             sent = bot.send_message(call.message.chat.id, 'Сколько мест вы хотите забронировать? Введите количество.')
             bot.register_next_step_handler(sent, get_biletU)
 
